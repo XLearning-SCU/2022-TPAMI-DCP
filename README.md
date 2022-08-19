@@ -37,7 +37,7 @@ The Caltech101-20, LandUse-21, Scene-15, UWA, and DHA datasets are placed in "da
 
 The code includes:
 
-- an example implementation of the model. The network structure and training/evaluation pipeline is in 
+- an example implementation of the model. The network structure and training/evaluation pipeline are in 
 ``` model.py``` and ```model.multiview.py: ```
 
 - clustering tasks for different missing rates.
