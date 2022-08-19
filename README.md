@@ -6,7 +6,7 @@ This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrasti
 > [Dual Contrastive Prediction for Incomplete Multi-view Representation Learning](http://pengxi.me/wp-content/uploads/2022/08/DCP.pdf)
 > [COMPLETER: Incomplete Multi-view Clustering via Contrastive Prediction](http://pengxi.me/wp-content/uploads/2021/03/2021CVPR-completer.pdf)
 
-![framework](figure//framework.pdf)
+![framework](figure//framework.png)
 
 ## Requirements
 
@@ -26,7 +26,7 @@ The hyper-parameters, the training options are defined in the configure folder.
 - configure_supervised.py: bi-view data classification (including human action recognition)
 - configure_supervised_multiview.py: 3-view data classification
 
-Note that for multi-view setting, we place both complete graph and cove view setting (by setting ```type='CG' or 'CV' ```).
+Note that for multi-view setting, we place both complete graph and cove view setting (i.e., ```type='CG' or 'CV' ```).
 
 ## Datasets
 
@@ -37,7 +37,7 @@ The Caltech101-20, LandUse-21, Scene-15, UWA, and DHA datasets are placed in "da
 The code includes:
 
 - an example implementation of the model. The network structure and training/evaluation pipeline is in 
-``` model.py/model.multiview.py: ```
+``` model.py``` and ```model.multiview.py: ```
 
 - clustering tasks for different missing rates.
 ```bash
@@ -71,7 +71,6 @@ onlyRGB Accuracy on the test set is 0.7727
 onlyDepth Accuracy on the test set is 0.8182
 ```
 Todo: Multi-view setting
-###
 
 ## Reference
 
