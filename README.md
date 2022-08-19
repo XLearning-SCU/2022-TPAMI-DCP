@@ -4,6 +4,7 @@
 This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrastive Prediction for Incomplete Multi-view Representation Learning. 
 
 > [Dual Contrastive Prediction for Incomplete Multi-view Representation Learning](http://pengxi.me/wp-content/uploads/2022/08/DCP.pdf)
+>
 > [COMPLETER: Incomplete Multi-view Clustering via Contrastive Prediction](http://pengxi.me/wp-content/uploads/2021/03/2021CVPR-completer.pdf)
 
 ![framework](figure//framework.png)
@@ -54,7 +55,7 @@ python run_supervised_multiview.py
 python run_HAR.py 
 ```
 
-You can get the following output by runing ```run_HAR.py```:
+You can get the following output by runing ```python run_HAR.py```:
 
 ```bash
 Epoch : 100/2000 ===> Reconstruction loss = 5.1242===> Reconstruction loss = 0.0489 ===> Map loss = 0.0001 ===> Map loss = 0.0001 ===> Loss_icl = -7.4860e+01 ===> Loss_ccl = 1.2800e+02 ===> All loss = 5.3657e+01
