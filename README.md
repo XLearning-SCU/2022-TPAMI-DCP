@@ -6,7 +6,7 @@ This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrasti
 > [Dual Contrastive Prediction for Incomplete Multi-view Representation Learning](http://pengxi.me/wp-content/uploads/2022/08/DCP.pdf)
 > [COMPLETER: Incomplete Multi-view Clustering via Contrastive Prediction](http://pengxi.me/wp-content/uploads/2021/03/2021CVPR-completer.pdf)
 
-![framework](figs//framework.pdf)
+![framework](figure//framework.pdf)
 
 ## Requirements
 
