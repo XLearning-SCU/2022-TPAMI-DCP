@@ -1,7 +1,7 @@
 # Dual Contrastive Prediction for Incomplete Multi-view Representation Learning
 
 
-This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrastive Prediction for Incomplete Multi-view Representation Learning. Precise numerical results of different missing rates could be accessed from [Results_missing_rate.xlsx](https://github.com/XLearning-SCU/2022-TPAMI-DCP/blob/main/Results_missing_rate.xlsx)
+This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrastive Prediction for Incomplete Multi-view Representation Learning. Precise numerical results of different missing rates could be accessed from [Results_missing_rate.xlsx](https://github.com/XLearning-SCU/2022-TPAMI-DCP/blob/main/Results_missing_rate.xlsx).
 
 > [Dual Contrastive Prediction for Incomplete Multi-view Representation Learning](http://pengxi.me/wp-content/uploads/2022/08/DCP.pdf)
 >
