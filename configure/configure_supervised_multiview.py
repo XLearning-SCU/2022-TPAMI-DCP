@@ -3,7 +3,7 @@ def get_default_config(data_name):
         return dict(
             type='CG',  # other: CV
             view=3,
-            seed=8,
+            seed=2,
             training=dict(
                 lr=3.0e-4,
                 start_dual_prediction=500,
@@ -32,6 +32,7 @@ def get_default_config(data_name):
         return dict(
             type='CG',  # other: CV
             view=3,
+            seed=8,
             Autoencoder=dict(
                 arch1=[20, 1024, 1024, 1024, 128],
                 arch2=[59, 1024, 1024, 1024, 128],
@@ -53,7 +54,6 @@ def get_default_config(data_name):
                 lambda2=0.1,
                 lambda1=0.1
             ),
-            seed=8,
         )
 
     elif data_name in ['LandUse_21']:
@@ -61,6 +61,7 @@ def get_default_config(data_name):
         return dict(
             type='CG',  # other: CV
             view=3,
+            seed=2,
             Prediction=dict(
                 arch1=[128, 256, 128],
                 arch2=[128, 256, 128],
@@ -82,7 +83,6 @@ def get_default_config(data_name):
                 lambda2=0.1,
                 lambda1=0.1,
             ),
-            seed=2,
         )
 
     else:

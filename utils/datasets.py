@@ -99,7 +99,7 @@ def load_multiview_data(config):
     elif data_name in ['Caltech101-20']:
         mat = sio.loadmat(os.path.join(main_dir, 'data', data_name + '.mat'))
         X = mat['X'][0]
-        for view in [3, 4, 5]:
+        for view in [3, 4, 5]: # in our paper DCP, we used view 3, 4, 5
             # 48, 40, 254, 1984, 512, 928
             # Gabor, wavelet, centrist, hog, gist, lbp
             x = X[view]
