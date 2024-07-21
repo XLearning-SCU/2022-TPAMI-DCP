@@ -1,9 +1,17 @@
 # Dual Contrastive Prediction for Incomplete Multi-view Representation Learning
 
+## What's New
 
-This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrastive Prediction for Incomplete Multi-view Representation Learning. 
+- [2024-7] 💡Now we support **arbitrary number** of views for multi-view clustering and classification tasks. see `run_clustering_multiview.py` and `model_multiview.py` for more details.
+```python
+python run_clustering_multiview.py --missing_rate 0.5
+python run_supervised_multiview.py --missing_rate 0.5
+```
 
-> [Dual Contrastive Prediction for Incomplete Multi-view Representation Learning](http://pengxi.me/wp-content/uploads/2022/08/DCP.pdf)
+
+This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrastive Prediction for Incomplete Multi-view Representation Learning. Precise numerical results of different missing rates could be accessed from [Results_missing_rate.xlsx](https://github.com/XLearning-SCU/2022-TPAMI-DCP/blob/main/Results_missing_rate.xlsx).
+
+> [Dual Contrastive Prediction for Incomplete Multi-view Representation Learning](http://pengxi.me/wp-content/uploads/2023/02/DCP-2023_compressed.pdf)
 >
 > [COMPLETER: Incomplete Multi-view Clustering via Contrastive Prediction](http://pengxi.me/wp-content/uploads/2021/03/2021CVPR-completer.pdf)
 
@@ -38,7 +46,7 @@ The Caltech101-20, LandUse-21, Scene-15, UWA, and DHA datasets are placed in "da
 The code includes:
 
 - an example implementation of the model. The network structure and training/evaluation pipeline are in 
-``` model.py``` and ```model.multiview.py: ```
+```model.py``` and ```model.multiview.py: ```
 
 - clustering tasks for different missing rates.
 ```bash
@@ -71,7 +79,6 @@ RGB+D Accuracy on the test set is 0.8926
 onlyRGB Accuracy on the test set is 0.7727
 onlyDepth Accuracy on the test set is 0.8182
 ```
-Todo: Multi-view setting
 
 ## Reference
 

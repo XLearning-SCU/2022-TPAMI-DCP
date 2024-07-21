@@ -1,14 +1,14 @@
 def get_default_config(data_name):
     if data_name in ['Caltech101-20']:
         return dict(
-            type='CG',  # other: CV
+            type='CV',  # other: CV
             view=3,
-            seed=1,
+            seed=10,
             training=dict(
                 lr=3.0e-4,
                 start_dual_prediction=50,
                 batch_size=256,
-                epoch=100,
+                epoch=150,
                 alpha=10,
                 lambda2=0.1,
                 lambda1=0.1,
@@ -17,6 +17,7 @@ def get_default_config(data_name):
                 arch1=[1984, 1024, 1024, 1024, 128],
                 arch2=[512, 1024, 1024, 1024, 128],
                 arch3=[928, 1024, 1024, 1024, 128],
+                # arch4=[254, 1024, 1024, 1024, 128],
                 activations='relu',
                 batchnorm=True,
             ),
@@ -24,14 +25,15 @@ def get_default_config(data_name):
                 arch1=[128, 256, 128],
                 arch2=[128, 256, 128],
                 arch3=[128, 256, 128],
+                # arch4=[128, 256, 128],
             ),
         )
 
     elif data_name in ['Scene_15']:
         """The default configs."""
         return dict(
-            type='CG',
-            seed=8,
+            type='CV',
+            seed=4,
             view=3,
             training=dict(
                 lr=1.0e-4,
@@ -58,8 +60,8 @@ def get_default_config(data_name):
     elif data_name in ['LandUse_21']:
         """The default configs."""
         return dict(
-            type='CG',
-            seed=4,
+            type='CV',
+            seed=5,
             view=3,
             Autoencoder=dict(
                 arch1=[59, 1024, 1024, 1024, 40],

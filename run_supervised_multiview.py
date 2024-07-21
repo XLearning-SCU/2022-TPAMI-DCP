@@ -21,7 +21,7 @@ dataset = {
 }
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--dataset', type=int, default='2', help='dataset id')
+parser.add_argument('--dataset', type=int, default='0', help='dataset id')
 parser.add_argument('--devices', type=str, default='0', help='gpu device ids')
 parser.add_argument('--print_num', type=int, default='50', help='gap of print evaluations')
 parser.add_argument('--test_time', type=int, default='5', help='number of test times')
@@ -41,7 +41,7 @@ def main():
     # Configure
     config = get_default_config(dataset)
     config['missing_rate'] = args.missing_rate
-    config['print_num'] =args.print_num
+    config['print_num'] = args.print_num
     config['dataset'] = dataset
     logger, plt_name = get_logger(config)
     logger.info('Dataset:' + str(dataset))
@@ -55,9 +55,6 @@ def main():
 
     # Load data
     X_list, Y_list = load_multiview_data(config)
-    x1_train_raw = X_list[0]
-    x2_train_raw = X_list[1]
-    x3_train_raw = X_list[2]
     label_raw = Y_list[0]
 
     fold_acc, fold_precision, fold_f_measure = [], [], []
@@ -66,37 +63,30 @@ def main():
         start = time.time()
         np.random.seed(data_seed)
 
-        len1 = x1_train_raw.shape[1]
-        len2 = x1_train_raw.shape[1] + x2_train_raw.shape[1]
-        data = np.concatenate([x1_train_raw, x2_train_raw, x3_train_raw], axis=1)
-
+        data = np.concatenate(X_list, axis=1)
         x_train, x_test, labels_train, labels_test = train_test_split(data, label_raw, test_size=0.2)
 
-        x1_train = x_train[:, :len1]
-        x2_train = x_train[:, len1:len2]
-        x3_train = x_train[:, len2:]
+        train_views = []
+        test_views = []
+        current_index = 0
 
-        x1_test = x_test[:, :len1]
-        x2_test = x_test[:, len1:len2]
-        x3_test = x_test[:, len2:]
+        for i in range(config['view']):
+            len_view = X_list[i].shape[1]
+            train_views.append(x_train[:, current_index:current_index + len_view])
+            test_views.append(x_test[:, current_index:current_index + len_view])
+            current_index += len_view
 
-        mask_train = get_mask(3, x1_train.shape[0], config['missing_rate'])
-        x1_train = x1_train * mask_train[:, 0][:, np.newaxis]
-        x2_train = x2_train * mask_train[:, 1][:, np.newaxis]
-        x3_train = x3_train * mask_train[:, 2][:, np.newaxis]
+        mask_train = get_mask(config['view'], train_views[0].shape[0], config['missing_rate'])
+        mask_test = get_mask(config['view'], test_views[0].shape[0], config['missing_rate'])
 
-        mask_test = get_mask(3, x1_test.shape[0], config['missing_rate'])
-        x1_test = x1_test * mask_test[:, 0][:, np.newaxis]
-        x2_test = x2_test * mask_test[:, 1][:, np.newaxis]
-        x3_test = x3_test * mask_test[:, 2][:, np.newaxis]
+        # mask every view
+        for i in range(config['view']):
+            train_views[i] = train_views[i] * mask_train[:, i][:, np.newaxis]
+            test_views[i] = test_views[i] * mask_test[:, i][:, np.newaxis]
 
-        x1_train = torch.from_numpy(x1_train).float().to(device)
-        x2_train = torch.from_numpy(x2_train).float().to(device)
-        x3_train = torch.from_numpy(x3_train).float().to(device)
+        train_views = [torch.from_numpy(view).float().to(device) for view in train_views]
+        test_views = [torch.from_numpy(view).float().to(device) for view in test_views]
         mask_train = torch.from_numpy(mask_train).long().to(device)
-        x1_test = torch.from_numpy(x1_test).float().to(device)
-        x2_test = torch.from_numpy(x2_test).float().to(device)
-        x3_test = torch.from_numpy(x3_test).float().to(device)
         mask_test = torch.from_numpy(mask_test).long().to(device)
 
         labels_train = np.array(labels_train)
@@ -117,37 +107,20 @@ def main():
         torch.backends.cudnn.deterministic = True
 
         # Build model
-        DCP = DCPMultiView(config)
-        optimizer = torch.optim.Adam(
-            itertools.chain(DCP.autoencoder1.parameters(), DCP.autoencoder2.parameters(),
-                            DCP.autoencoder3.parameters(),
-                            DCP.a2b.parameters(), DCP.b2a.parameters(),
-                            DCP.a2c.parameters(), DCP.c2a.parameters(),
-                            DCP.b2c.parameters(), DCP.c2b.parameters()
-                            ),
-            lr=config['training']['lr'])
+        DCP_model = DCPMultiView(config)
+        optimizer = torch.optim.Adam(DCP_model.parameters(), lr=config['training']['lr'])
 
-        logger.info(DCP.autoencoder1)
-        logger.info(DCP.a2b)
+        logger.info(DCP_model.autoencoder1)
+        logger.info(DCP_model.Prediction_0_1)
         logger.info(optimizer)
-
-        DCP.autoencoder1.to(device), DCP.autoencoder2.to(device), DCP.autoencoder3.to(device)
-        DCP.a2b.to(device), DCP.b2a.to(device)
-        DCP.b2c.to(device), DCP.c2b.to(device)
-        DCP.a2c.to(device), DCP.c2a.to(device)
+        DCP_model.to(device)
 
         if config['type'] == 'CG':
-            acc, precision, f_measure = DCP.train_completegraph_supervised(config, logger, accumulated_metrics,
-                                                                           x1_train, x2_train, x3_train, x1_test,
-                                                                           x2_test, x3_test, labels_train,
-                                                                           labels_test, mask_train, mask_test,
-                                                                           optimizer, device)
+            acc, precision, f_measure = DCP_model.train_completegraph_supervised(config, logger, accumulated_metrics, train_views, test_views,
+                                                                                 labels_train, labels_test, mask_train, mask_test, optimizer, device)
         elif config['type'] == 'CV':
-            acc, precision, f_measure = DCP.train_coreview_supervised(config, logger, accumulated_metrics,
-                                                                      x1_train, x2_train, x3_train, x1_test,
-                                                                      x2_test, x3_test, labels_train,
-                                                                      labels_test, mask_train, mask_test,
-                                                                      optimizer, device)
+            acc, precision, f_measure = DCP_model.train_coreview_supervised(config, logger, accumulated_metrics, train_views, test_views,
+                                                                            labels_train, labels_test, mask_train, mask_test, optimizer, device)
         else:
             raise ValueError('Training type not match!')
 
