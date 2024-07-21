@@ -2,7 +2,7 @@
 
 ## What's New
 
-- [2024-7] 💡Now we support **arbitrary number** of views for multi-view clustering and classification tasks. see `run_clustering_multiview.py` and `model_multiview.py` for more details.
+- [2024-7] 💡Now we support **arbitrary number** of views for multi-view clustering and classification tasks. See `run_clustering_multiview.py` and `model_multiview.py` for more details.
 ```python
 python run_clustering_multiview.py --missing_rate 0.5
 python run_supervised_multiview.py --missing_rate 0.5
