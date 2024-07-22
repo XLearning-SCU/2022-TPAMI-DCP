@@ -2,11 +2,12 @@
 
 ## What's New
 
-- [2024-7] 💡Now we support **arbitrary number** of views for multi-view clustering and classification tasks. See `run_clustering_multiview.py` and `model_multiview.py` for more details.
+- [2024-7] 💡Now we support **arbitrary number** of views for multi-view clustering and classification tasks. See `run_*_multiview.py` and `model_multiview.py` for more details. Remember to set the number of views and network architecture in `configure/configure_*_multiview.py`.
 ```python
 python run_clustering_multiview.py --missing_rate 0.5
 python run_supervised_multiview.py --missing_rate 0.5
 ```
+
 
 ## Intro
 This repo contains the code and data of our IEEE TPAMI'2022 paper Dual Contrastive Prediction for Incomplete Multi-view Representation Learning. Precise numerical results of different missing rates could be accessed from [Results_missing_rate.xlsx](https://github.com/XLearning-SCU/2022-TPAMI-DCP/blob/main/Results_missing_rate.xlsx).
