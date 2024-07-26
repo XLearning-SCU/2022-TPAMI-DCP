@@ -1,8 +1,8 @@
 # Dual Contrastive Prediction for Incomplete Multi-view Representation Learning
 
-## What's New
+## ${\color{red} What's ~ New}$
 
-- [2024-7] 💡Now we support **arbitrary number** of views for multi-view clustering and classification tasks. See `run_*_multiview.py` and `model_multiview.py` for more details. Remember to set the number of views and network architecture in `configure/configure_*_multiview.py`. By default, **View 0** is set as the core view in our code.
+-   [2024-7] Now we support **arbitrary number** of views for multi-view clustering and classification tasks. See `run_*_multiview.py` and `model_multiview.py` for more details. Remember to set the number of views and network architecture in `configure/configure_*_multiview.py`. By default, **View 0** is set as the core view in our code.
 ```python
 python run_clustering_multiview.py --missing_rate 0.5
 python run_supervised_multiview.py --missing_rate 0.5
